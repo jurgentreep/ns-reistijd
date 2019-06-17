@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/jurgentreep/ns-reistijd#readme",
   "dependencies": {
+    "moment": "^2.24.0",
     "papaparse": "^5.0.0"
   },
   "devDependencies": {
