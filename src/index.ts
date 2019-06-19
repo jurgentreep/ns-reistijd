@@ -1,5 +1,6 @@
 import { parse } from 'papaparse';
 import moment from 'moment';
+import './style.css';
 
 const form = document.querySelector('form');
 const input = document.querySelector('input');
