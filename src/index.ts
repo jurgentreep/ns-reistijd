@@ -110,12 +110,6 @@ const displayResults: (journeys: Journey[]) => Promise<Journey[]> = (journeys) =
   const averageMinutes = totalMinutes / journeys.length;
   const maxMinutes = Math.max(...journeyTimes);
   const minMinutes = Math.min(...journeyTimes);
-  journeys.forEach((journey, index) => {
-    if (journey.difference === maxMinutes) {
-      console.log(journey);
-      console.log(index);
-    }
-  })
 
   if (resultsElement) {
     resultsElement.innerHTML = `
