@@ -9,13 +9,23 @@
 </head>
 
 <body>
-  <form>
-    <div>
+  <form class="csv-form">
+    <div class="mb-1">
       <input type="file">
     </div>
-    <button class="submit-button">Parse CSV</button>
+    <button class="mb-1">Parse CSV</button>
   </form>
-  <div class="results"></div>
+  <form class="select-form">
+    <div class="mb-1">
+      <select class="station-select" multiple>
+        <!-- Filled by dynamically -->
+      </select>
+    </div>
+    <button class="mb-1">Filter</button>
+  </form>
+  <div class="results">
+    <!-- Filled by dynamically -->
+  </div>
 </body>
 
 </html>
