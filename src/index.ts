@@ -13,6 +13,7 @@ if (form) {
 
     parseFile()
       .then(filterData)
+      // .then(logRawData)
       .then(parseData)
       .then(calculateDifference)
       .then(displayResults)
@@ -58,6 +59,11 @@ const filterData: (data: string[][]) => Promise<string[][]> = (data) => new Prom
   )
 })
 
+const logRawData: (data: string[][]) => Promise<string[][]> = (data) => new Promise((resolve, reject) => {
+  console.log(data);
+  resolve(data)
+})
+
 const createMoment = (date: string, time: string) => {
   return moment(`${date} ${time}`, dateFormat);
 }
@@ -69,13 +75,23 @@ interface Journey {
 }
 
 const parseData: (data: string[][]) => Promise<Journey[]> = (data) => new Promise((resolve, reject) => {
-  const journey = data.map(entry => ({
-    departure: createMoment(entry[CsvEntry.Date], entry[CsvEntry.DepartureTime]),
-    arrival: createMoment(entry[CsvEntry.Date], entry[CsvEntry.ArrivalTime]),
-    difference: 0
-  }))
+  const journeys = data.map(entry => {
+    const departure = createMoment(entry[CsvEntry.Date], entry[CsvEntry.DepartureTime]);
+    const arrival = createMoment(entry[CsvEntry.Date], entry[CsvEntry.ArrivalTime]);
 
-  resolve(journey);
+    // There's a chance you check in before 00:00 and check out after 00:00
+    if (arrival.isBefore(departure)) {
+      arrival.add(1, 'days');
+    }
+
+    return {
+      departure,
+      arrival,
+      difference: 0
+    }
+  })
+
+  resolve(journeys);
 })
 
 const calculateDifference: (journeys: Journey[]) => Promise<Journey[]> = (journeys) => new Promise((resolve, reject) => {
@@ -94,6 +110,12 @@ const displayResults: (journeys: Journey[]) => Promise<Journey[]> = (journeys) =
   const averageMinutes = totalMinutes / journeys.length;
   const maxMinutes = Math.max(...journeyTimes);
   const minMinutes = Math.min(...journeyTimes);
+  journeys.forEach((journey, index) => {
+    if (journey.difference === maxMinutes) {
+      console.log(journey);
+      console.log(index);
+    }
+  })
 
   if (resultsElement) {
     resultsElement.innerHTML = `
