@@ -24,7 +24,7 @@
   "homepage": "https://github.com/jurgentreep/ns-reistijd#readme",
   "dependencies": {
     "clean-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "moment": "^2.26.0",
     "papaparse": "^5.2.0"
   },
